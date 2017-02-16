@@ -1,0 +1,58 @@
+.leaflet-bar button,
+.leaflet-bar button:hover {
+	opacity: 1;
+	width: 38.5px;
+	height:38.5px;
+	border: 1px solid #fff;
+	border-radius: 100px;
+	border-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(255, 255, 255, 1);
+	font-size: 1.4em;
+  cursor: pointer;
+}
+
+.leaflet-bar button {
+  background-color: rgba(255, 255, 255, 1);	
+}
+
+.leaflet-bar button:hover {
+  
+
+}
+
+.leaflet-bar button:first-of-type {
+  
+}
+
+.leaflet-bar button:last-of-type {
+}
+
+.leaflet-bar.disabled,
+.leaflet-bar button.disabled {
+  cursor: default;
+  pointer-events: none;
+  opacity: 0.1;
+
+}
+
+.easy-button-button .button-state{
+  display: block;
+  width: 100%;
+  position: relative;
+  
+}
+
+
+.leaflet-touch .leaflet-bar button {
+  width: 32px;
+  height: 32px;
+  max-height: 10000px;
+  max-width: 10000px;
+  line-height: 30px;
+}
+.easy-button-container {
+  opacity: 1;
+	border-radius: 100px;
+}
+
+
