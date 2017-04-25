@@ -33,7 +33,7 @@
         }
 
         html, body, #map {
-            height: 80%;
+            height: 100%;
 			background: 'white';
         }
 
@@ -66,7 +66,7 @@
         <div id="map"></div>		
 		<button id="downloady">download</button>
 		
-		<button type="submit" onclick="window.download('config.xml')">Download!</button>
+		<button type="submit" onclick="window.open('config.xml')">Download!</button>
 		<a href="config.xml" download="my file">Download</a>
         <script>
 		
@@ -160,9 +160,9 @@
 	})
 	}).addTo(map);
 	
-	var markerDrag;
 	//Custom-Location-Pin funktionalisieren
 	L.easyButton('fa fa-plus', function(event){
+	var markerDrag;
 	markerDrag = new L.Marker([51.44459561, 7.26093000],{
 	icon: smallIcon2,
 	draggable: true
@@ -216,50 +216,50 @@
 	}]
 	}).addTo(map);
 	
-//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------			//Strukturierung, Export und Download funktionalisieren	
-	        document.getElementById('export').onclick = function(e) {
-            // Extract GeoJson from featureGroup
-			map.locate();
-            //var data = Standorte.toGeoJSON();
+	var exportButton = L.easyButton('fa fa-globe', function(){
+	         var data = Standorte.toGeoJSON();
+			 
 			//markerDrag.toGeoJSON()
+			
             // Stringify the GeoJson
             //var convertedData = 'text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(data));
 			//console.log(JSON.stringify(Standorte.toGeoJSON(), null, 2));
-            // Create export
-			//new FileManager().download_file(convertedData, log('downloaded success'));
-			//document.getElementById('export').setAttribute('href', 'data:' + convertedData);
-			//console.log(convertedData);
-            //document.getElementById('export').setAttribute('download','FURZ.js');
-			//var fileTransfer = new FileTransfer();
-			//fileTransfer.download(convertedData);
-			//new FileManager().download_file(convertedData, log('downloaded success'));
-			//Log-Methode
 			//console.log(JSON.stringify(data, null, 2));
-			//document.getElementById('export').setAttribute('href', 'data:' + convertedData);
-			//document.getElementById('export').setAttribute('download','FURZ.js');
+			
+            // Create download but how?
+
+        }).addTo(map);
+	
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------			//Strukturierung, Export und Download funktionalisieren	
+	        document.getElementById('export').onclick = function(e) {
+            // Extract GeoJson from featureGroup
+
+            var data = Standorte.toGeoJSON();
+			//markerDrag.toGeoJSON()
+			
+            // Stringify the GeoJson
+            var convertedData = 'text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(data));
+			//console.log(JSON.stringify(Standorte.toGeoJSON(), null, 2));
+			
+            // Create export
+			//console.log(JSON.stringify(data, null, 2));
+			document.getElementById('export').setAttribute('href', 'data:' + convertedData);
+			document.getElementById('export').setAttribute('download','FURZ.js');
 			//localStorage[convertedData];
 			//window.open('www.google.de','_blank');
         };
 		document.getElementById('downloady').addEventListener('click', function(e) {
             // Extract GeoJson from featureGroup
-			map.locate();
-            //var data = Standorte.toGeoJSON();
-			//markerDrag.toGeoJSON()
+            var data = Standorte.toGeoJSON();
+
+			
             // Stringify the GeoJson
-           // var convertedData = 'text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(data));
-			//console.log(JSON.stringify(Standorte.toGeoJSON(), null, 2));
+			var convertedData = 'text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(data));
+
             // Create export
-			//new FileManager().download_file(convertedData, log('downloaded success'));
-			//document.getElementById('export').setAttribute('href', 'data:' + convertedData);
-			//console.log(convertedData);
-            //document.getElementById('export').setAttribute('download','FURZ.js');
-			//var fileTransfer = new FileTransfer();
-			//fileTransfer.download(convertedData);
-			//new FileManager().download_file(convertedData, log('downloaded success'));
-			//Log-Methode
-			//console.log(JSON.stringify(data, null, 2));
-			//document.getElementById('downloady').setAttribute('href', 'data:' + convertedData);
-			//document.getElementById('downloady').setAttribute('download','FURZ.js');
+			
+			document.getElementById('downloady').setAttribute('href', 'data:' + convertedData);
+			document.getElementById('downloady').setAttribute('download','FURZ.js');
 			//localStorage[convertedData];
 			//window.open('www.google.de','_blank');
         });
