@@ -225,10 +225,16 @@
 			//new FileManager().download_file(convertedData, log('downloaded success'));
 			document.getElementById('export').setAttribute('href', 'data:' + convertedData);
             document.getElementById('export').setAttribute('download','FURZ.js');
+			var fileTransfer = new FileTransfer();
+			fileTransfer.download(convertedData);
 			//new FileManager().download_file(convertedData, log('downloaded success'));
 			//Log-Methode
 			//console.log(JSON.stringify(Standorte.toGeoJSON(), null, 2));
         };
+		
+		
+		
+		
 	
     </script>
 
