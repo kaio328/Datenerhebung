@@ -33,18 +33,20 @@
 
         #export {
             position: absolute;
-            top:16%;
+            top:22%;
             right:94.5%;
             z-index:1000;
             background: grey;
             color:white;
             padding:6px;
-            border-radius:4px;
-			border-radius: 100%;
+          
+			border-radius: 10%;
             font-family: 'Helvetica Neue';
             cursor: pointer;
             font-size:12px;
             text-decoration:none;
+			margin-right: 20px;
+			margin-left: 10px;
         }
 		
 	
@@ -66,6 +68,7 @@
 		<script src="js/L.Control.Locate.js" ></script>
 		<script src="js/easy-button.js"></script>
 		<script src="data/rahmen1.js"></script>
+		<script src="data/json_TEST.js"></script>
 		
 		<link rel="stylesheet" href="css/L.Control.Locate.css" />
 		<link rel="stylesheet" href="css/easy-button.css" />
@@ -76,26 +79,28 @@
 		//Einrichtung der Basiskarte
 		var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
 			osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-			osm = L.tileLayer(osmUrl, {maxZoom: 17,  opacity:1});
+			osm = L.tileLayer(osmUrl, {maxZoom: 20,  opacity:1});
 			
 		var Standorte = new L.layerGroup();
 		
 			
+
+		
 		//Einrichtung der Karte
 		var map = L.map('map', {zoomControl: false, rotate: true, touchRotate: false})
-				.setView([51.44459561, 7.26093000], 17);
-				//.addLayer(osm);
+				.setView([51.44480, 7.26150], 17)
+				.addLayer(osm);
 				//addLayer(Standorte);
-
+				
 		//Drehung der Karte um Winkel x		
 		var angle = 27.825;
 		map.setBearing(angle);	
 		
 		//Einrichtung der Campuskarte
 		var CampusMapLinear = L.tileLayer('result2/{z}/{x}/{y}.png',{
-		maxZoom: 18,
-		minZoom: 16
-		}).addTo(map);
+		maxZoom: 20,
+		minZoom: 0
+		});
 		
 		var overlayMaps = {
 		"Standorte": Standorte
@@ -108,9 +113,38 @@
 		"fillOpacity": 0
 		};
 		
+		
+		
 		//L.control.layers(null, overlayMaps).addTo(map);
 		
 		json_rahmenJSON = new L.geoJson(json_rahmen1, {interactive: false, style: styleRahmen}).addTo(map);
+		
+		function doStyleAlle() {
+            return {
+                radius: 5.0,
+                fillColor: 'red',
+                color: 'red',
+                weight: 5.0,
+                opacity: 1,
+                dashArray: '',
+                fillOpacity: 1
+	
+            }
+        };
+		
+		//Funktion mit der Features des Layers auf Basis des festlegeten Styles (doStyleAlle) abbgebilded werden
+       /* function doPointToLayerAlle(feature, latlng) {
+            return L.circleMarker(latlng, doStyleAlle())
+        };
+	
+		//Einbindung der Datei json_AlleJSON als Layer
+		var json_TESTJSON = new L.geoJson(json_TEST, {
+			//onEachFeature: pop_Alle,													//für jedes feature wird die function pop_Alle ausgeführt
+			pointToLayer: doPointToLayerAlle											//features werden mittels function doPointToLayerAlle und dem darin enhaltenen Verweis auf doStyleAlle als Punkt-Signatures abgebildet
+		});*/
+		//json_TESTJSON.addTo(map);
+		
+		
 		
 		//map.setMaxBounds(json_rahmenJSON.getBounds());
 		
@@ -125,7 +159,16 @@
 			shadowSize:  [41, 41]
 		});
 
-
+		/*map.on('click', function (e){											//--> Funktion:  in einem Block --> beim Clicken wird marker erstellt und abgebildet
+		var clicker = new L.Marker(e.latlng, {icon: smallIcon2}).addTo(map);
+		//clicker(e.latlng).addTo(map);
+		});*/
+		
+		/*function addMarkerClick(e){							//--> Funktion über zwei Blöcke --> erst function mit einer bestimmten Sache definiert, die passieren soll dann
+		var clicker = new L.Marker(e.latlng, {icon: smallIcon2}).addTo(map);	
+		};	
+		map.on('click', addMarkerClick);					//--> dann gesagt, wann diese Funktion ausgeführt werden soll --> beim clicken der Karte --> auslagern ggf. hilfreich, wenn auf diese 		
+																//-->Funktion öfter zurückgegriffen wird?*/
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------				
 	
 	//Button für Standortsuche implementieren
@@ -159,7 +202,7 @@
     marker.bindPopup(content).openPopup();
 	
 	function onClick(e) {
-   console.log(marker.properties);
+   console.log(marker.feature.properties);
    console.log(Standorte.properties);
    
 	}
@@ -168,6 +211,90 @@
 	//});
 	})
 	}).addTo(map);
+	
+	L.easyButton('fa fa-plus', function(event){
+	var markerDrag = new L.Marker([51.44459561, 7.26093000],{
+	icon: smallIcon2,
+	draggable: true
+	}).addTo(Standorte).addTo(map).on('click', onClick);
+	markerDrag.properties = {};
+	var feature = markerDrag.feature = markerDrag.feature || {};
+	feature.type = "Feature";
+	feature.properties = feature.properties || {};
+	
+	var content = document.createElement("textarea");
+	content.addEventListener('keyup', function () {
+    	//marker.properties.Name = content.value;   --> lediglich für den Marker --> wird nicht an layer übertragen
+		feature.properties["Name"] = content.value;
+    });
+
+    markerDrag.on("popupopen", function () {
+    	//content.value = marker.properties.Name;	--> lediglich für den Marker --> wird nicht an layer übertragen
+		feature.properties["Name"] = content.value;
+	  content.focus();
+
+	  
+    });
+    markerDrag.bindPopup(content).openPopup();
+	//markerDrag.bindPopup(contentTest).openPopup();
+	
+	function onClick(e) {
+   console.log(markerDrag.feature.properties);
+   //console.log(Standorte.properties);
+   }
+	}).addTo(map);
+	
+	/*L.easyButton('fa fa-minus', function(){
+	map.setView([51.44459561, 7.26093000], 17)
+	}).addTo(map);*/
+	
+	var campusmapButton = L.easyButton({
+	id: 'campusmap', 
+	type: 'animate',
+	states: [{
+		stateName: 'add-campusmap',
+		icon:'fa-map',
+		title: 'Campuskarte hinzufügen',
+		onClick: function() {
+	CampusMapLinear.addTo(map);	
+	map.setView([51.44480, 7.26150], 17);
+				this.state('remove-campusmap');
+
+	}
+	}, {
+	    stateName: 'remove-campusmap',
+		title: 'Campuskarte entfernen',
+		icon: 'fa-map',
+		onClick: function() {
+		map.removeLayer(CampusMapLinear);
+				this.state('add-campusmap');
+				    }
+	}]
+	}).addTo(map);
+	
+	
+	
+	/*var marker = L.marker(event.latlng, {icon: smallIcon2}).addTo(Standorte).addTo(map).on('click', onClick);
+	marker.properties = {};
+	var feature = marker.feature = marker.feature || {};
+	feature.type = "Feature";
+	feature.properties = feature.properties || {};
+	var content = document.createElement("textarea");
+	
+    content.addEventListener("keyup", function () {
+    	//marker.properties.Name = content.value;   --> lediglich für den Marker --> wird nicht an layer übertragen
+		feature.properties["Name"] = content.value;
+    });
+    marker.on("popupopen", function () {
+    	//content.value = marker.properties.Name;	--> lediglich für den Marker --> wird nicht an layer übertragen
+		feature.properties["Name"] = content.value;
+      content.focus();
+    });
+    marker.bindPopup(content).openPopup();
+	
+	function onClick(e) {
+   console.log(marker.properties);
+   console.log(Standorte.properties);*/
 	
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------				
 	        document.getElementById('export').onclick = function(e) {
@@ -180,8 +307,8 @@
 
             // Create export
 			document.getElementById('export').setAttribute('href', 'data:' + convertedData);
-            document.getElementById('export').setAttribute('download','data.geojson');
-			
+            document.getElementById('export').setAttribute('download','data.js');
+			//new FileManager().download_file(convertedData, log('downloaded success'));
 			//Log-Methode
 			//console.log(JSON.stringify(Standorte.toGeoJSON(), null, 2));
         }

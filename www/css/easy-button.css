@@ -6,9 +6,9 @@
 	border: 1px solid #fff;
 	border-radius: 100px;
 	border-color: rgba(0, 0, 0, 0.7);
-  background-color: rgba(255, 255, 255, 1);
+    background-color: rgba(255, 255, 255, 1);
 	font-size: 1.4em;
-  cursor: pointer;
+	cursor: pointer;
 }
 
 .leaflet-bar button {
@@ -55,4 +55,34 @@
 	border-radius: 100px;
 }
 
+/*-----------------------------------------Hier: Routing-Funktion freigeben--------------------------------------------------------------*/
+.state-remove-campusmap,
+.state-add-campusmap{
+  transition-duration: .5s;
+  position: absolute;
+  display: block;
+  top: 0;
+  font-size: 1.1em; 
+  margin-top: 5px;
+  margin-left: 1px;
+}
+
+.state-remove-campusmap{
+  margin-top: -31px;
+  
+  }
+
+.state-add-campusmap{
+  visibility:hidden; 
+}
+
+.state-remove-campusmap.remove-campusmap-active{
+
+  margin-left: 0px;
+  font-size: 1.1em; 
+  color: #FC8428;
+}
+
+.state-add-campusmap.add-campusmap-active{
+  }
 
