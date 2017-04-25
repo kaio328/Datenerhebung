@@ -13,6 +13,12 @@
 		
 		<script src="js/deps.js"></script>
 		<script src="js/leaflet-include.js"></script>
+		<script src="js/L.Control.Locate.js" ></script>
+		<script src="js/easy-button.js"></script>
+
+		
+		<link rel="stylesheet" href="css/L.Control.Locate.css" />
+		<link rel="stylesheet" href="css/easy-button.css" />
 
 
 		<link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css" />
@@ -31,7 +37,7 @@
 			background: 'white';
         }
 
-        #export {
+        #export{
             position: absolute;
             top:40px;
             right:50px;
@@ -48,7 +54,6 @@
 			margin-right: 20px;
 			margin-left: 20px;
         }
-		
 	
     </style>
 	
@@ -58,21 +63,7 @@
     </div>
 	
 		<a href='#' id='export'>Export Features</a>
-        <div id="map"></div>
-		<button id="convert">
-		Get all features to GeoJSON string
-		</button>
-
-
-
-		<script src="js/L.Control.Locate.js" ></script>
-		<script src="js/easy-button.js"></script>
-		<script src="data/rahmen1.js"></script>
-		<script src="data/json_TEST.js"></script>
-		
-		<link rel="stylesheet" href="css/L.Control.Locate.css" />
-		<link rel="stylesheet" href="css/easy-button.css" />
-				
+        <div id="map"></div>		
 	
         <script>
 		
@@ -231,12 +222,13 @@
 			
 
             // Create export
+			//new FileManager().download_file(convertedData, log('downloaded success'));
 			document.getElementById('export').setAttribute('href', 'data:' + convertedData);
-            document.getElementById('export').setAttribute('download','data.js');
-			new FileManager().download_file(convertedData, log('downloaded success'));
+            //document.getElementById('export').setAttribute('download','data.js');
+			//new FileManager().download_file(convertedData, log('downloaded success'));
 			//Log-Methode
 			//console.log(JSON.stringify(Standorte.toGeoJSON(), null, 2));
-        }
+        };
 	
     </script>
 
