@@ -77,10 +77,16 @@
         <script>
 		
 		//Einrichtung der Basiskarte
-		var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-			osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-			osm = L.tileLayer(osmUrl, {maxZoom: 20,  opacity:1});
-			
+		var osm = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+		maxZoom: 17,
+		minZoom: 15,
+		opacity: 1,
+		//detectRetina: true,
+		bounceAtZoomLimits: false,
+		attribution: '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+		});
+		
+		//Layergruppe hinzufügen um Sammeln der Marker
 		var Standorte = new L.layerGroup();
 		
 		//Einrichtung der Karte
@@ -96,7 +102,8 @@
 		//Einrichtung der Campuskarte
 		var CampusMap = L.tileLayer('result2/{z}/{x}/{y}.png',{
 		maxZoom: 20,
-		minZoom: 0
+		minZoom: 0,
+		attribution: "Campusplan &copy; <a href='https://www.geographie.ruhr-uni-bochum.de/institut/'>Kai Christopher Rudolph</a>"
 		});
 				
 		//Standart MarkerIcon für Gebrauch mit Angle 
