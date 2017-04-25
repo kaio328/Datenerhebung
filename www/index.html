@@ -157,9 +157,10 @@
 	})
 	}).addTo(map);
 	
+	var markerDrag;
 	//Custom-Location-Pin funktionalisieren
 	L.easyButton('fa fa-plus', function(event){
-	var markerDrag = new L.Marker([51.44459561, 7.26093000],{
+	markerDrag = new L.Marker([51.44459561, 7.26093000],{
 	icon: smallIcon2,
 	draggable: true
 	}).addTo(Standorte).addTo(map).on('click', onClick);
@@ -216,20 +217,23 @@
 	        document.getElementById('export').onclick = function(e) {
             // Extract GeoJson from featureGroup
             var data = Standorte.toGeoJSON();
-
+			//markerDrag.toGeoJSON()
             // Stringify the GeoJson
             var convertedData = 'text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(data));
-			
-
+			//console.log(JSON.stringify(Standorte.toGeoJSON(), null, 2));
             // Create export
 			//new FileManager().download_file(convertedData, log('downloaded success'));
-			document.getElementById('export').setAttribute('href', 'data:' + convertedData);
-            document.getElementById('export').setAttribute('download','FURZ.js');
-			var fileTransfer = new FileTransfer();
-			fileTransfer.download(convertedData);
+			//document.getElementById('export').setAttribute('href', 'data:' + convertedData);
+			//console.log(convertedData);
+            //document.getElementById('export').setAttribute('download','FURZ.js');
+			//var fileTransfer = new FileTransfer();
+			//fileTransfer.download(convertedData);
 			//new FileManager().download_file(convertedData, log('downloaded success'));
 			//Log-Methode
-			//console.log(JSON.stringify(Standorte.toGeoJSON(), null, 2));
+			console.log(JSON.stringify(data, null, 2));
+			document.getElementById('export').setAttribute('href', 'data:' + convertedData);
+			document.getElementById('export').setAttribute('download','FURZ.js');
+			window.open('www.google.de');
         };
 		
        // Wait for Cordova to load  
