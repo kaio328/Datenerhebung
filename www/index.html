@@ -64,7 +64,10 @@
 	
 		<a href='#' id='export'>Export Features</a>
         <div id="map"></div>		
-	
+		<button id="downloady">download</button>
+		
+		<button type="submit" onclick="window.download('config.xml')">Download!</button>
+		<a href="config.xml" download="my file">Download</a>
         <script>
 		
 		//Einrichtung der Basiskarte
@@ -216,6 +219,7 @@
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------			//Strukturierung, Export und Download funktionalisieren	
 	        document.getElementById('export').onclick = function(e) {
             // Extract GeoJson from featureGroup
+			map.locate();
             var data = Standorte.toGeoJSON();
 			//markerDrag.toGeoJSON()
             // Stringify the GeoJson
@@ -233,10 +237,33 @@
 			console.log(JSON.stringify(data, null, 2));
 			document.getElementById('export').setAttribute('href', 'data:' + convertedData);
 			document.getElementById('export').setAttribute('download','FURZ.js');
-			localStorage[FURZ.js];
+			localStorage[convertedData];
 			//window.open('www.google.de','_blank');
         };
-		
+		document.getElementById('downloady').addEventListener('click', function(e) {
+            // Extract GeoJson from featureGroup
+			//map.locate();
+            var data = Standorte.toGeoJSON();
+			//markerDrag.toGeoJSON()
+            // Stringify the GeoJson
+            var convertedData = 'text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(data));
+			//console.log(JSON.stringify(Standorte.toGeoJSON(), null, 2));
+            // Create export
+			//new FileManager().download_file(convertedData, log('downloaded success'));
+			//document.getElementById('export').setAttribute('href', 'data:' + convertedData);
+			//console.log(convertedData);
+            //document.getElementById('export').setAttribute('download','FURZ.js');
+			//var fileTransfer = new FileTransfer();
+			//fileTransfer.download(convertedData);
+			//new FileManager().download_file(convertedData, log('downloaded success'));
+			//Log-Methode
+			//console.log(JSON.stringify(data, null, 2));
+			document.getElementById('downloady').setAttribute('href', 'data:' + convertedData);
+			document.getElementById('downloady').setAttribute('download','FURZ.js');
+			localStorage[convertedData];
+			//window.open('www.google.de','_blank');
+        });
+
        // Wait for Cordova to load  
     document.addEventListener("deviceready", onDeviceReady, false);  
     // Cordova is ready  
