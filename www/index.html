@@ -11,10 +11,13 @@
 		<script src="js/leaflet1.0.2.js"></script>
 		<link rel="stylesheet" href="css/leaflet1.0.2.css" />
 		
+		<script src="js/FileSaver.js"></script>
+		
 		<script src="js/deps.js"></script>
 		<script src="js/leaflet-include.js"></script>
 		<script src="js/L.Control.Locate.js" ></script>
 		<script src="js/easy-button.js"></script>
+		
 
 		
 		<link rel="stylesheet" href="css/L.Control.Locate.css" />
@@ -216,14 +219,6 @@
 	}]
 	}).addTo(map);
 	
-			function exportToCsv() {
-            var myCsv = "Col1,Col2,Col3\nval1,val2,val3";
-
-            window.open('data:text/csv;charset=utf-8,' + escape(myCsv));
-        }
-
-        var button = document.getElementById('b');
-        button.addEventListener('click', exportToCsv);
 	
 	var exportButton = L.easyButton('fa-floppy-o ', function(){
 	
@@ -233,7 +228,8 @@
 		dlAnchorElem.setAttribute("href",     dataStr     );
 		dlAnchorElem.setAttribute("download", "data.js");
 		dlAnchorElem.click();*/
-		button.click();
+	var blob = new Blob(["Hello, world!"], {type: "text/plain;charset=utf-8"});
+	saveAs(blob, "hello world.txt");
 
      }).addTo(map);
 	
