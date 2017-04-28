@@ -224,54 +224,30 @@
 	
 	var exportButton = L.easyButton('fa-floppy-o ', function(){
 	
-		var myJsonObject = Standorte.toGeoJSON();
-		/*var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(storageObj));
+		var storageObj = Standorte.toGeoJSON();
+		var data = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(storageObj));
+		
+		//localStorage.setItem('someData', data);
+		
 		var dlAnchorElem = document.getElementById('downloadAnchorElem');
-		dlAnchorElem.setAttribute("href",     dataStr     );
+		dlAnchorElem.setAttribute("href",     data    );
 		dlAnchorElem.setAttribute("download", "data.js");
-		dlAnchorElem.click();*/
-//var file = new File(["Hello, world!"], "hello world.txt", {type: "text/plain;charset=utf-8"});
-//saveAs(file);
-function saveJSON(data, filename){
+		dlAnchorElem.click();
+		//var file = new File(["Hello, world!"], "hello world.txt", {type: "text/plain;charset=utf-8"});
+		//saveAs(file);
 
-    if(!data) {
-        console.error('No data')
-        return;
-    }
 
-    if(!filename) filename = 'console.json'
-
-    if(typeof data === "object"){
-        data = JSON.stringify(data, undefined, 4)
-    }
-
-    var blob = new Blob([data], {type: 'text/json'}),
-        e    = document.createEvent('MouseEvents'),
-        a    = document.createElement('a')
-
-    a.download = filename
-    a.href = window.URL.createObjectURL(blob)
-    a.dataset.downloadurl =  ['text/json', a.download, a.href].join(':')
-    e.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null)
-    a.dispatchEvent(e)
-}
-saveJSON(myJsonObject, "saved_data.json");
      }).addTo(map);
-	 
-	//URL = "my url";
-	//mWebView = (WebView) findViewById(R.id.webview);
-	//mWebView.setWebViewClient(new HelloWebViewClient());
-	//mWebView.getSettings().setDefaultZoom(ZoomDensity.FAR);
-	//mWebView.loadUrl(URL);
-	//Log.v("TheURL", URL);
-	//mWebView.setDownloadListener(new DownloadListener() {
-    //public void onDownloadStart(String url, String userAgent,
-    //            String contentDisposition, String mimetype,
-     //           long contentLength) {
-     //   Intent i = new Intent(Intent.ACTION_VIEW);
-     //   i.setData(Uri.parse(url));
-      //  startActivity(i);
-    
+	
+	
+		var exportButton2 = L.easyButton('fa fa-globe ', function(){
+		
+		var data = Standorte.toGeoJSON();
+		localStorage.setItem('someData', data);
+
+
+     }).addTo(map);
+	
 	
 	
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------			//Strukturierung, Export und Download funktionalisieren	
@@ -281,16 +257,19 @@ saveJSON(myJsonObject, "saved_data.json");
             var data = Standorte.toGeoJSON();
 			
             // Stringify the GeoJson
-            var convertedData = 'text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(data));
+            //var convertedData = 'text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(data));
 			//console.log(JSON.stringify(Standorte.toGeoJSON(), null, 2));
 			
             // Create export
 			//console.log(JSON.stringify(data, null, 2));
-			document.getElementById('export').setAttribute('href', 'data:' + convertedData);
-			document.getElementById('export').setAttribute('download','FURZ.js');
+			//document.getElementById('export').setAttribute('href', 'data:' + convertedData);
+			//document.getElementById('export').setAttribute('download','FURZ.js');
+			localStorage.setItem('someData', data);
 
 			
         };
+		
+		
  </script>  
 		
 		
