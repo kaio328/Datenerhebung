@@ -11,6 +11,8 @@
 		<script src="js/leaflet1.0.2.js"></script>
 		<link rel="stylesheet" href="css/leaflet1.0.2.css" />
 		
+		<script src="js/canvas-to-blob.js"></script>
+		
 		<script src="js/FileSaver.js"></script>
 		
 		<script src="js/deps.js"></script>
@@ -228,8 +230,9 @@
 		dlAnchorElem.setAttribute("href",     dataStr     );
 		dlAnchorElem.setAttribute("download", "data.js");
 		dlAnchorElem.click();*/
-	var blob = new Blob(["Hello, world!"], {type: "text/plain;charset=utf-8"});
-	saveAs(blob, "hello world.txt");
+var file = new File(["Hello, world!"], "hello world.txt", {type: "text/plain;charset=utf-8"});
+saveAs(file);
+
 
      }).addTo(map);
 	
