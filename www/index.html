@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>POI-Suche in Bochum</title>
+        <title>Web-Anwendung zur Datenerhebung</title>
     
         <meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"  />
@@ -63,10 +63,9 @@
     </div>
 	
 		<a href='#' id='export'>Export Features</a>
+		<a id="downloadAnchorElem" style="display:none"></a>
         <div id="map"></div>		
-		<button id="downloady">download</button>
-		
-		<button type="submit" onclick="window.open('config.xml')">Download!</button>
+
 		<a href="config.xml" download="my file">Download</a>
         <script>
 		
@@ -216,26 +215,22 @@
 	}]
 	}).addTo(map);
 	
-	var exportButton = L.easyButton('fa fa-globe', function(){
-	         var data = Standorte.toGeoJSON();
-			 
-			//markerDrag.toGeoJSON()
-			
-            // Stringify the GeoJson
-            //var convertedData = 'text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(data));
-			//console.log(JSON.stringify(Standorte.toGeoJSON(), null, 2));
-			//console.log(JSON.stringify(data, null, 2));
-			
-            // Create download but how?
+	var exportButton = L.easyButton('fa-floppy-o ', function(){
+	
+		var storageObj = Standorte.toGeoJSON();
+		var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(storageObj));
+		var dlAnchorElem = document.getElementById('downloadAnchorElem');
+		dlAnchorElem.setAttribute("href",     dataStr     );
+		dlAnchorElem.setAttribute("download", "data.js");
+		dlAnchorElem.click();
 
-        }).addTo(map);
+     }).addTo(map);
 	
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------			//Strukturierung, Export und Download funktionalisieren	
+ // Extract GeoJson from featureGroup
 	        document.getElementById('export').onclick = function(e) {
-            // Extract GeoJson from featureGroup
 
             var data = Standorte.toGeoJSON();
-			//markerDrag.toGeoJSON()
 			
             // Stringify the GeoJson
             var convertedData = 'text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(data));
@@ -245,24 +240,9 @@
 			//console.log(JSON.stringify(data, null, 2));
 			document.getElementById('export').setAttribute('href', 'data:' + convertedData);
 			document.getElementById('export').setAttribute('download','FURZ.js');
-			//localStorage[convertedData];
-			//window.open('www.google.de','_blank');
+
+			
         };
-		document.getElementById('downloady').addEventListener('click', function(e) {
-            // Extract GeoJson from featureGroup
-            var data = Standorte.toGeoJSON();
-
-			
-            // Stringify the GeoJson
-			var convertedData = 'text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(data));
-
-            // Create export
-			
-			document.getElementById('downloady').setAttribute('href', 'data:' + convertedData);
-			document.getElementById('downloady').setAttribute('download','FURZ.js');
-			//localStorage[convertedData];
-			//window.open('www.google.de','_blank');
-        });
  </script>  
 		
 		
